@@ -1,0 +1,275 @@
+Drag strip light system
+
+Hardware
+x8 trip lasers 
+	(-)Neg trigger
+
+x2 green led
+x10 yellow led
+x2 red led
+x2 4 digit LED
+Reset button
+
+***********************************************************
+
+#Requirements#
+bool=SysReady
+bool=Lane1stagedA
+bool=Lane1stagedB
+bool=Lane1Fault
+bool=Lane1Finish
+bool=Lane2stagedA
+bool=Lane2stagedB
+bool=Lane2Fault
+bool=Lane2Finish
+bool=Difficulty
+bool=StartRace
+bool=laser1
+bool=laser2
+bool=laser3
+bool=laser4
+bool=laser5 
+bool=laser6
+bool=laser7
+bool=laser8
+bool=button1
+var=Winner
+int=Lane1Timer
+int=Lane2Timer
+int=Lane1RT
+int=Lane2RT
+int=Lane1FinishTime
+int=Lane2FinishTime
+
+LEDScreens
+LEDSCREEN0=OFF (no numbers)
+LEDSCREEN1=OFF (no numbers)
+
+
+
+Tree LED setup 
+RED0 O	RED1 O
+YEL0 O	YEL1 O
+YEL2 O	YEL3 O
+YEL4 O	YEL5 O
+GRN0 O	GRN1 O
+
+YEL6 O	YEL7 O
+YEL8 O	YEL9 O
+
+#reset cycle
+
+If ResetSwitch=1
+SysReady==False
+FlashLEDs 
+#All LED test cycle#
+#0 is OFF, 1 is ON#
+
+RED0==1
+RED1==1
+wait 0.5
+YEL0==1
+YEL1==1
+wait 0.5
+YEL2==1
+YEL3==1
+wait 0.5
+YEL4==1
+YEL5==1
+wait 0.5
+GRN0==1
+GRN1==1
+wait 0.5
+YEL6==1
+YEL7==1
+wait 0.5
+YEL8==1
+YEL9==1
+wait 1.0
+YEL0==0
+YEL1==0
+wait 0.1
+YEL2==0
+YEL3==0
+wait 0.1
+YEL4==0
+YEL5==0
+wait 0.1
+GRN0==0
+GRN1==0
+wait 0.1
+YEL6==0
+YEL7==0
+wait 0.1
+YEL8==0
+YEL9==0
+
+#check starting lasers/ for each loop here?#
+	{IF laser1=on
+		{Lane1StagedA==False}
+	IF laser2=on
+		{Lane1StagedB==False}
+	IF laser3=on
+		{Lane1Fault==False}
+	IF laser4=on
+		{Lane1Finished==False}
+	IF laser5=on
+		{Lane2StagedA==False}
+	IF laser6=on
+		{Lane2StagedB==False}
+	IF laser7=on
+		{Lane1Fault==False}
+	IF laser8=on
+		{Lane1Finish==False}
+	THEN SysReady=True
+	
+	else
+	{flash RED0 and RED1 on and off
+	SysReady=False} 
+	#Lasers not aligned#
+	}
+
+#standard tree timing#
+Difficulty=0 
+
+# Staging A Loop (incorrect rules, fix this, double staging is legal)
+While Lane1StagedA=False OR Lane2StagedA=False{
+	IF laser1=off & laser2=on
+		{Lane1stagedA==True
+		YEL6==1}
+	IF laser5=off & laser6=on
+		{Lane2stagedA==True
+		YEL7==1}
+
+#	IF laser2=off & laser5=on
+#		{Lane1Fault==True}
+#	IF laser6=off & laser1=on
+#		{Lane2Fault==True}
+
+	IF laser3=off
+		{Lane1Fault==True}
+	IF laser7=off
+		{Lane2Fault==True}
+
+	IF Lane1Fault=True
+		{RED0==1;
+		RED1==0;
+		GRN1==1;
+		Winner==Lane2;
+		LEDSCREEN0==99.99;
+		LEDSCREEN1==00.00;
+		exit}
+
+	IF Lane2Fault=True
+		{RED0==0;
+		RED1==1;
+		GRN0==1;
+		Winner==Lane1;
+		LEDSCREEN0==00.00;
+		LEDSCREEN1==99.99;
+		exit}
+	}
+
+#Staging loop B#
+While Lane1StagedB=False OR Lane2StagedB=False{
+	IF laser1=off & laser2=off & laser3=on
+		{Lane1stagedB==True
+		YEL8==1}
+	IF laser5=off & laser6=off & laser7=on
+		{Lane2stagedB==True
+		YEL9==1}
+
+	IF laser3=off & StartRace=false
+		{Lane1Fault==True}
+	IF laser7=off & StartRace=false
+		{Lane2Fault==True}
+
+	IF Lane1Fault=True
+		{RED0==1;
+		RED1==0;
+		Winner==Lane2;
+		LEDSCREEN0==99.99;
+		LEDSCREEN1==00.00;
+		exit}
+
+	IF Lane2Fault=True
+		{RED0==0;
+		RED1==1;
+		Winner==Lane1;
+		LEDSCREEN0==00.00;
+		LEDSCREEN1==99.99;
+		exit}
+	}
+
+#count down
+StartRace==False
+If Lane1stagedB=True & Lane2stagedB=True 
+#Check Faults Staged B ############### loop this while counting down, allow non Faulting Lane to continue during StagedB=Truse
+IF laser3=off & StartRace=false
+	{Lane1Fault==True}
+IF laser7=off & StartRace=false
+	{Lane2Fault==True}
+
+IF Lane1Fault=True
+	{RED0==1;
+	RED1==0;
+	Winner==Lane2;
+	LEDSCREEN0==99.99;
+	exit}
+
+IF Lane2Fault=True
+	{RED0==0;
+	RED1==1;
+	Winner==Lane1;
+	LEDSCREEN1==99.99;
+	exit}
+##################################
+wait 0.5
+YEL0=1
+YEL1=1
+wait 0.5
+YEL2=1
+YEL3=1
+wait 0.5
+YEL4=1
+YEL5=1
+wait 0.5
+#End Check Faults Staged B Loop#
+StartRace==True
+IF Lane1Fault=true{
+	GRN0==0}
+	ELSE{
+	GRN0==1;
+	RED0==0}
+IF Lane2Fault=true{
+	GRN1==0}
+	ELSE{
+	GRN1==1;
+	RED1==0}
+Lane1Timer Start
+Lane2Timer Start
+#Reaction time loop#
+when laser3=off{ 
+	record Lane1Timer to Lane1RTime only once}
+when laser7=off{
+	record Lane2Timer to Lane2RTime only once}
+#Final Time loop#
+when laser4=off{
+	record Lane1Timer to Lane1FinishTime only once;
+	IF Lane1Fault=true{
+		LEDSCREEN0==99.99}
+	ELSE{		
+		LEDSCREEN0==Lane1FinishTime}
+	}
+when laser8=off{
+	record Lane2Timer to Lane2FinishTime only once;
+	IF Lane2Fault=true{
+		LEDSCREEN0==99.99}
+	ELSE{
+		LEDSCREEN0==Lane1FinishTime}
+	}
+
+##Add 60FT and 1/8th mile lasers and variables##
+##Print results to screen
+##Use asdf ;lkj keys for laser simulation
+##GUI based light tree for testing
