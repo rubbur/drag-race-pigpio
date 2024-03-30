@@ -8,14 +8,13 @@ OFF = 0
 
 pi = pigpio.pi()
 
-# TODO: set correct pin numbers
 # 1 button, 4 lasers, 2 green leds, 6 yellow leds, 2 red leds
 buttonPin = 2
 laserPins = [3, 4, 5, 6]
 ledPins = {
 	"green": [10, 11],
-	"yellow": [12, 13, 14, 21, 22, 23],
-	"red": [24, 25]	
+	"yellow": [12, 13, 14, 21, 22, 23, 24, 25, 26, 27],
+	"red": [28, 29]	
 }
 
 # Set up
@@ -59,12 +58,12 @@ def startRace():
 	leftCarFinished = False
 	rightCarFinished = False
 	while not leftCarFinished or not rightCarFinished: # wait for both cars to finish the race
-		if pi.read(laserPins[2]) == 1 and not leftCar:
+		if pi.read(laserPins[2]) == 1 and not leftCarFinished:
 			if not rightCarFinished:
 				print("Left car wins!")
 			print("Left car time: " + str(time.time() - startTime))
 			leftCarFinished = True
-		if pi.read(laserPins[3]) == 1 and not rightCar:
+		if pi.read(laserPins[3]) == 1 and not rightCarFinished:
 			if not leftCarFinished:
 				print("Right car wins!")
 			print("Right car time: " + str(time.time() - startTime))
