@@ -10,12 +10,12 @@ pi = pigpio.pi()
 
 # TODO: set correct pin numbers
 # 1 button, 4 lasers, 2 green leds, 6 yellow leds, 2 red leds
-buttonPin = 0
-laserPins = [0, 0, 0, 0]
+buttonPin = 2
+laserPins = [3, 4, 5, 6]
 ledPins = {
-	"green": [0, 0],
-	"yellow": [0, 0, 0, 0, 0, 0],
-	"red": [0, 0]	
+	"green": [10, 11],
+	"yellow": [12, 13, 14, 21, 22, 23],
+	"red": [24, 25]	
 }
 
 # Set up
