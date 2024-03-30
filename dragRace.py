@@ -30,9 +30,9 @@ for colors in ledPins.values():
 
 # check if a car moves out of position during the countdown
 def checkFoul():
-	if pi.read(laserPins[0]) == 0:
+	if pi.read(laserPins[0]) == 1:
 		pi.write(ledPins["red"][0], ON)
-	if pi.read(laserPins[1]) == 0:
+	if pi.read(laserPins[1]) == 1:
 		pi.write(ledPins["red"][1], ON)
 
 def flashLeds(pins):
@@ -45,11 +45,14 @@ def flashLeds(pins):
 	checkFoul()
 
 def startRace():
+	for pin in ledPins["red"]:
+		pi.write(pin, OFF)
+        
 	flashLeds(ledPins["yellow"][0:2])
 	flashLeds(ledPins["yellow"][2:4])
 	flashLeds(ledPins["yellow"][4:6])
-	pi.write(ledPins["green"][0], ON)
-	pi.write(ledPins["green"][1], ON)
+	for pin in ledPins["green"]:
+		pi.write(pin, ON)
  
 	# time each car with lasers at the end of the track
 	startTime = time.time()
@@ -72,8 +75,12 @@ def main():
 	# wait for button to be pressed
 	while True:
 		print("wait for button press...")
-		if pi.read(buttonPin) == 1 and all(pi.read(laserPins) == 1 for pin in laserPins):
+		if pi.read(buttonPin) == 1 and pi.read(laserPins[0]) == 0 and pi.read(laserPins[1]) == 0:
 			startRace()
 		elif pi.read(buttonPin) == 1:
 			print("car(s) not in position")
 		time.sleep(0.1)
+
+if __name__ == "__main__":
+	main()
+    
