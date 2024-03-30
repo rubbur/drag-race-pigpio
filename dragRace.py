@@ -57,10 +57,14 @@ def startRace():
 	rightCarFinished = false
 	while not leftCarFinished or not rightCarFinished: # wait for both cars to finish the race
 		if pi.read(laserPins[2]) == 1 and not leftCar:
-			print("Left lane time: " + str(time.time() - startTime))
+			if not rightCarFinished:
+				print("Left car wins!")
+			print("Left car time: " + str(time.time() - startTime))
 			leftCarFinished = true
 		if pi.read(laserPins[3]) == 1 and not rightCar:
-			print("Right lane time: " + str(time.time() - startTime))
+			if not leftCarFinished:
+				print("Right car wins!")
+			print("Right car time: " + str(time.time() - startTime))
 			rightCarFinished = true
 		time.sleep(0.01)
 
