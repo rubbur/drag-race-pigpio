@@ -8,7 +8,7 @@ OFF = 0
 
 pi = pigpio.pi()
 
-# 1 button, 4 lasers, 2 green leds, 6 yellow leds, 2 red leds
+# 1 button, 4 lasers, 2 green leds, 8 yellow leds, 2 red leds
 buttonPin = 2
 laserPins = [3, 4, 5, 6]
 ledPins = {
