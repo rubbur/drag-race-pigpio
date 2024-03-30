@@ -1,11 +1,14 @@
 # drag strip (python + pigpio)
 
+from sense_hat import SenseHat
 import pigpio
 import time
 
 ON = 1
 OFF = 0
 
+sense = SenseHat()
+sense.clear()
 pi = pigpio.pi()
 
 # 1 button, 4 lasers, 2 green leds, 8 yellow leds, 2 red leds
