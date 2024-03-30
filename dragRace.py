@@ -8,12 +8,14 @@ OFF = 0
 
 pi = pigpio.pi()
 
-buttonPin = 21
-laserPins = []
+# TODO: set correct pin numbers
+# 1 button, 4 lasers, 2 green leds, 6 yellow leds, 2 red leds
+buttonPin = 0
+laserPins = [0, 0, 0, 0]
 ledPins = {
-	"green": [],
-	"yellow": [],
-	"red": []	
+	"green": [0, 0],
+	"yellow": [0, 0, 0, 0, 0, 0],
+	"red": [0, 0]	
 }
 
 # Set up
@@ -26,7 +28,7 @@ for colors in ledPins.values():
 	for pin in colors:
 		pi.set_mode(pin, pigpio.OUTPUT)
 
-# Check if a car moves out of position during countdown
+# check if a car moves out of position during the countdown
 def checkFoul():
 	if pi.read(laserPins[0]) == 0:
 		pi.write(ledPins["red"][0], ON)
@@ -48,9 +50,22 @@ def startRace():
 	flashLeds(ledPins["yellow"][4:6])
 	pi.write(ledPins["green"][0], ON)
 	pi.write(ledPins["green"][1], ON)
+ 
+	# time each car with lasers at the end of the track
+	startTime = time.time()
+	leftCarFinished = false
+	rightCarFinished = false
+	while not leftCarFinished or not rightCarFinished: # wait for both cars to finish the race
+		if pi.read(laserPins[2]) == 1 and not leftCar:
+			print("Left lane time: " + str(time.time() - startTime))
+			leftCarFinished = true
+		if pi.read(laserPins[3]) == 1 and not rightCar:
+			print("Right lane time: " + str(time.time() - startTime))
+			rightCarFinished = true
+		time.sleep(0.01)
 
 def main():
-	# Wait for button to be pressed
+	# wait for button to be pressed
 	while True:
 		print("wait for button press...")
 		if pi.read(buttonPin) == 1 and all(pi.read(laserPins) == 1 for pin in laserPins):
