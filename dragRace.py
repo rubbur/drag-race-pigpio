@@ -38,6 +38,10 @@ def update_pixel(row, col, color):
     x1, y1 = x0 + CELL_SIZE, y0 + CELL_SIZE
     canvas.create_rectangle(x0, y0, x1, y1, fill=color, outline="")
 
+def clearWindow():
+    for widget in root.winfo_children():
+        widget.destroy()
+
 update_pixel(0, 0, "green")
 
 def gui_thread():
@@ -85,7 +89,6 @@ def sense_thread():
         sense.set_pixel(1, 1, black)
 
     def startRace():
-        global winner
         stageOn()
      
         flashLeds([[2, 0], [2, 7]], yellow)
@@ -100,8 +103,6 @@ def sense_thread():
         startTime = time.time()
         leftCarFinished = True
         rightCarFinished = False
-        if winner:
-            winner.destroy()
         winnerText = "Recent Winner: "
         if leftCarFinished:
             winnerText += f"left car\nTime: {round(time.time() - startTime, 3):.3f} seconds"
@@ -144,6 +145,7 @@ def sense_thread():
             elif userInput == 'q':
                 sense.clear()
                 exit()
+        clearWindow()
         startRace()
         time.sleep(0.1)
 
