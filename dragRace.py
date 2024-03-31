@@ -11,9 +11,16 @@ sense = SenseHat()
 sense.clear()
 pi = pigpio.pi()
 
+red = (255, 0, 0)
+green = (0, 255, 0)
+yellow = (255, 255, 0)
+
 # 1 button, 4 lasers, 2 green leds, 8 yellow leds, 2 red leds
 buttonPin = 2
-laserPins = [3, 4, 5, 6]
+#laserPins = [3, 4, 5, 6]
+leftLaser = 1
+rightLaser = 1
+
 ledPins = {
 	"green": [10, 11],
 	"yellow": [12, 13, 14, 21, 22, 23, 24, 25],
@@ -23,8 +30,10 @@ ledPins = {
 # Set up
 pi.set_mode(buttonPin, pigpio.INPUT)
 
+"""
 for pin in laserPins:
 	pi.set_mode(pin, pigpio.INPUT)
+"""
  
 for colors in ledPins.values():
 	for pin in colors:
@@ -32,11 +41,18 @@ for colors in ledPins.values():
 
 # check if a car moves out of position during the countdown
 def checkFoul():
+	if leftLaser == 1:
+		sense.set_pixel(0, 0, red)
+	if rightLaser == 1:
+		sense.set_pixel(7, 0, red)
+		
+    """
 	if pi.read(laserPins[0]) == 1:
 		pi.write(ledPins["red"][0], ON)
 	if pi.read(laserPins[1]) == 1:
 		pi.write(ledPins["red"][1], ON)
-
+	"""
+ 
 def flashLeds(pins):
 	for pin in pins:
 		pi.write(pin, ON)
