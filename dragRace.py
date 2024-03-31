@@ -70,6 +70,7 @@ def startRace():
 		time.sleep(0.01)
 
 def main():
+	global leftLaser, rightLaser 
 	# wait for button to be pressed
 	while True:
 		# if 1 is pressed toggle laser1
@@ -77,10 +78,10 @@ def main():
 		#while input not enter key
 		while True:
 			userInput = input("press 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently {}\npress enter to start",leftLaser, rightLaser	)
-			if userInput == 1:
+			if userInput == '1':
 				leftLaser = not leftLaser
 				print("laser1 is now: " + leftLaser)
-			elif userInput == 2:
+			elif userInput == '2':
 				rightLaser = not rightLaser
 				print("laser2 is now: " + rightLaser)
 			elif userInput == "":
