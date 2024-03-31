@@ -46,7 +46,7 @@ def checkFoul():
 	if rightLaser == 1:
 		sense.set_pixel(7, 0, red)
 		
-    """
+	"""
 	if pi.read(laserPins[0]) == 1:
 		pi.write(ledPins["red"][0], ON)
 	if pi.read(laserPins[1]) == 1:
@@ -77,7 +77,7 @@ def startRace():
 	leftCarFinished = False
 	rightCarFinished = False
 	while not leftCarFinished or not rightCarFinished: # wait for both cars to finish the race
-		if pi.read(laserPins[2]) == 1 and not leftCarFinished:
+		"""if pi.read(laserPins[2]) == 1 and not leftCarFinished:
 			if not rightCarFinished:
 				print("Left car wins!")
 			print("Left car time: " + str(time.time() - startTime))
@@ -87,16 +87,17 @@ def startRace():
 				print("Right car wins!")
 			print("Right car time: " + str(time.time() - startTime))
 			rightCarFinished = True
+		"""
 		time.sleep(0.01)
 
 def main():
 	# wait for button to be pressed
 	while True:
 		print("wait for button press...")
-		if pi.read(buttonPin) == 1 and pi.read(laserPins[0]) == 0 and pi.read(laserPins[1]) == 0:
-			startRace()
-		elif pi.read(buttonPin) == 1:
-			print("car(s) not in position")
+		#if pi.read(buttonPin) == 1 and pi.read(laserPins[0]) == 0 and pi.read(laserPins[1]) == 0:
+		startRace()
+		#elif pi.read(buttonPin) == 1:
+		#	print("car(s) not in position")
 		time.sleep(0.1)
 
 if __name__ == "__main__":
