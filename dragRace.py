@@ -100,12 +100,16 @@ def sense_thread():
         startTime = time.time()
         leftCarFinished = True
         rightCarFinished = False
-        winnerText = "Winner: " + ("Left" if leftCarFinished else "Right")
+        winnerText = "Winner: "
+        if leftCarFinished:
+            winnerText += "left car\nTime: " + str(time.time() - startTime)
+        else:
+            winnerText += "right car\nTime: " + str(time.time() - startTime)
         winner = tk.Label(root, text=winnerText, font=("Arial", 20))
         winner.pack()
         
-        print("Left car time: " + str(time.time() - startTime))
-        print("Right car time: " + str(time.time() - startTime))
+        #print("Left car time: " + str(time.time() - startTime))
+        #print("Right car time: " + str(time.time() - startTime))
         while not leftCarFinished or not rightCarFinished: # wait for both cars to finish the race
             """if pi.read(laserPins[2]) == 1 and not leftCarFinished:
                 if not rightCarFinished:
@@ -126,7 +130,7 @@ def sense_thread():
     while True:
         global leftLaser, rightLaser
         while True:
-            userInput = input("\npress 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently: {}\npress enter to start\n\nInput: ".format(leftLaser, rightLaser))
+            userInput = input("\npress 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently: {}\npress enter to start\npress q to quit\n\nInput: ".format(leftLaser, rightLaser))
             if userInput == '1':
                 leftLaser = not leftLaser
                 print("laser1 is now: {}".format(leftLaser))
@@ -135,6 +139,9 @@ def sense_thread():
                 print("laser2 is now: {}".format(rightLaser))
             elif userInput == "":
                 break
+            elif userInput == 'q':
+                sense.clear()
+                return
         startRace()
         time.sleep(0.1)
 
