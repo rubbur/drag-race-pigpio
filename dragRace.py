@@ -12,6 +12,7 @@ sense.clear()
 red = (255, 0, 0)
 green = (0, 255, 0)
 yellow = (255, 255, 0)
+black = (0, 0, 0)
 
 # 1 button, 4 lasers, 2 green leds, 8 yellow leds, 2 red leds
 buttonPin = 2
@@ -40,8 +41,8 @@ def flashLeds(pins, color):
 	checkFoul()
 	time.sleep(0.5)
 	for pin in pins:
-		sense.set_pixel(pins[0][0], pins[0][1], OFF)
-		sense.set_pixel(pins[1][0], pins[1][1], OFF)
+		sense.set_pixel(pins[0][0], pins[0][1], black)
+		sense.set_pixel(pins[1][0], pins[1][1], black)
 	checkFoul()
 
 def startRace():
