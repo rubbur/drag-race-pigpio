@@ -2,6 +2,7 @@
 
 from sense_hat import SenseHat
 import pigpio
+import tkinter as tk
 import time
 
 ON = 1
@@ -29,6 +30,28 @@ for pin in laserPins:
 for colors in ledPins.values():
 	for pin in colors:
 		pi.set_mode(pin, pigpio.OUTPUT)
+
+# GUI
+root = tk.Tk()
+root.title("Tree Window")
+
+canvas = tk.Canvas(root, width=600, height=600)
+CELL_SIZE = 75
+
+for i in range(8):
+    for j in range(8):
+        x0, y0 = j * CELL_SIZE, i * CELL_SIZE
+        x1, y1 = x0 + CELL_SIZE, y0 + CELL_SIZE
+        canvas.create_rectangle(x0, y0, x1, y1, fill="black", outline="")
+
+def update_pixel(row, col, color):
+    x0, y0 = col * CELL_SIZE, row * CELL_SIZE
+    x1, y1 = x0 + CELL_SIZE, y0 + CELL_SIZE
+    canvas.create_rectangle(x0, y0, x1, y1, fill=color, outline="")
+
+update_pixel(0, 0, "green")
+
+root.mainloop()
 
 # check if a car moves out of position during the countdown
 def checkFoul():
