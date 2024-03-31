@@ -102,9 +102,9 @@ def sense_thread():
         rightCarFinished = False
         winnerText = "Winner: "
         if leftCarFinished:
-            winnerText += "left car\nTime: " + str(time.time() - startTime)
+            winnerText += f"left car\nTime: {round(time.time() - startTime, 3):.3f} seconds"
         else:
-            winnerText += "right car\nTime: " + str(time.time() - startTime)
+            winnerText += f"right car\nTime: {round(time.time() - startTime, 3):.3f} seconds"
         winner = tk.Label(root, text=winnerText, font=("Arial", 20))
         winner.pack()
         
