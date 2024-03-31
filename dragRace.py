@@ -45,14 +45,12 @@ def flashLeds(pins, color):
 	checkFoul()
 
 def startRace():
-    checkFoul()
-    time.sleep(1)
-    flashLeds([[0, 0], [7, 0]], yellow)
-    flashLeds([[0, 0], [7, 0]], yellow)
-    flashLeds([[0, 0], [7, 0]], yellow)
-    flashLeds([[0, 0], [7, 0]], yellow)
- 
-	# time each car with lasers at the end of the track
+	checkFoul()
+	time.sleep(1)
+	flashLeds([[0, 0], [7, 0]], yellow)
+	flashLeds([[0, 0], [7, 0]], yellow)
+	flashLeds([[0, 0], [7, 0]], yellow)
+	flashLeds([[0, 0], [7, 0]], yellow)
 	startTime = time.time()
 	leftCarFinished = False
 	rightCarFinished = False
