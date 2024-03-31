@@ -45,9 +45,9 @@ def gui_thread():
 
 def sense_thread():
     def checkFoul():
-        if leftLaser:
+        if not leftLaser:
             sense.set_pixel(6, 0, red)
-        if rightLaser:
+        if not rightLaser:
             sense.set_pixel(6, 7, red)
             
     def flashLeds(pins, color):
