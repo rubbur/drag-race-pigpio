@@ -25,9 +25,9 @@ rightLaser = True
 # check if a car moves out of position during the countdown
 def checkFoul():
 	if leftLaser == True:
-		sense.set_pixel(5, 0, red)
+		sense.set_pixel(6, 0, red)
 	if rightLaser == True:
-		sense.set_pixel(5, 7, red)
+		sense.set_pixel(6, 7, red)
 		
 	"""
 	if pi.read(laserPins[0]) == 1:
@@ -48,12 +48,26 @@ def flashLeds(pins, color):
 	checkFoul()
 
 def startRace():
-	flashLeds([[0, 0], [0, 7]], yellow)
-	flashLeds([[1, 0], [1, 7]], yellow)
+	sense.set_pixel(0, 0, yellow)
+	sense.set_pixel(0, 1, yellow)
+	time.sleep(0.5)
+	sense.set_pixel(1, 0, yellow)
+	sense.set_pixel(1, 1, yellow)
+	time.sleep(0.5)
+	sense.set_pixel(0, 6, yellow)
+	sense.set_pixel(0, 7, yellow)
+	time.sleep(0.5)
+	sense.set_pixel(1, 6, yellow)
+	sense.set_pixel(1, 7, yellow)
+	time.sleep(0.5)
+	
 	flashLeds([[2, 0], [2, 7]], yellow)
 	flashLeds([[3, 0], [3, 7]], yellow)
-	sense.set_pixel(4, 0, green)
-	sense.set_pixel(4, 7, green)
+	flashLeds([[4, 0], [4, 7]], yellow)
+	if leftLaser == False: # true means fault so no green light for that side
+		sense.set_pixel(5, 0, green)
+	if rightLaser == False:
+		sense.set_pixel(5, 7, green)
 	startTime = time.time()
 	leftCarFinished = False
 	rightCarFinished = False
