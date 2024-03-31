@@ -51,7 +51,6 @@ def sense_thread():
             sense.set_pixel(6, 7, red)
             
     def flashLeds(pins, color):
-        print("turning on pins: " + str(pins))
         for pin in pins:
             sense.set_pixel(pins[0][0], pins[0][1], color)
             sense.set_pixel(pins[1][0], pins[1][1], color)
@@ -141,7 +140,7 @@ def sense_thread():
                 break
             elif userInput == 'q':
                 sense.clear()
-                return
+                exit()
         startRace()
         time.sleep(0.1)
 
