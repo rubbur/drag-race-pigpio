@@ -80,7 +80,7 @@ def main():
 		# if 2 is pressed toggle laser2
 		#while input not enter key
 		while True:
-			userInput = input("press 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently: {}\npress enter to start\n".format(leftLaser, rightLaser))
+			userInput = input("\npress 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently: {}\npress enter to start\n\nInput: ".format(leftLaser, rightLaser))
 			if userInput == '1':
 				leftLaser = not leftLaser
 				print("laser1 is now: {}".format(leftLaser))
