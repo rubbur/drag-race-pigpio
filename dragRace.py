@@ -140,8 +140,6 @@ def sense_thread():
                 break
             elif userInput == 'q':
                 sense.clear()
-                sense_thread.stop()
-                gui_thread.stop()
                 exit()
         startRace()
         time.sleep(0.1)
