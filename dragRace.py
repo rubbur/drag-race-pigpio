@@ -1,7 +1,6 @@
 # drag strip (python + pigpio)
 
 from sense_hat import SenseHat
-import pigpio
 import time
 
 ON = 1
@@ -9,7 +8,6 @@ OFF = 0
 
 sense = SenseHat()
 sense.clear()
-pi = pigpio.pi()
 
 red = (255, 0, 0)
 green = (0, 255, 0)
@@ -20,24 +18,6 @@ buttonPin = 2
 #laserPins = [3, 4, 5, 6]
 leftLaser = 1
 rightLaser = 1
-
-ledPins = {
-	"green": [10, 11],
-	"yellow": [12, 13, 14, 21, 22, 23, 24, 25],
-	"red": [26, 27]	
-}
-
-# Set up
-pi.set_mode(buttonPin, pigpio.INPUT)
-
-"""
-for pin in laserPins:
-	pi.set_mode(pin, pigpio.INPUT)
-"""
- 
-for colors in ledPins.values():
-	for pin in colors:
-		pi.set_mode(pin, pigpio.OUTPUT)
 
 # check if a car moves out of position during the countdown
 def checkFoul():
@@ -53,24 +33,24 @@ def checkFoul():
 		pi.write(ledPins["red"][1], ON)
 	"""
  
-def flashLeds(pins):
+def flashLeds(pins, color):
 	for pin in pins:
-		pi.write(pin, ON)
+		sense.set_pixel(pins[0][0], pins[0][1], color)
+		sense.set_pixel(pins[1][0], pins[1][1], color)
 	checkFoul()
 	time.sleep(0.5)
 	for pin in pins:
-		pi.write(pin, OFF)
+		sense.set_pixel(pins[0][0], pins[0][1], OFF)
+		sense.set_pixel(pins[1][0], pins[1][1], OFF)
 	checkFoul()
 
 def startRace():
-	for pin in ledPins["red"]:
-		pi.write(pin, OFF)
-        
-	flashLeds(ledPins["yellow"][0:2])
-	flashLeds(ledPins["yellow"][2:4])
-	flashLeds(ledPins["yellow"][4:6])
-	for pin in ledPins["green"]:
-		pi.write(pin, ON)
+    checkFoul()
+    time.sleep(1)
+    flashLeds([[0, 0], [7, 0]], yellow)
+    flashLeds([[0, 0], [7, 0]], yellow)
+    flashLeds([[0, 0], [7, 0]], yellow)
+    flashLeds([[0, 0], [7, 0]], yellow)
  
 	# time each car with lasers at the end of the track
 	startTime = time.time()
@@ -93,7 +73,7 @@ def startRace():
 def main():
 	# wait for button to be pressed
 	while True:
-		print("wait for button press...")
+		input("Press Enter to start...")
 		#if pi.read(buttonPin) == 1 and pi.read(laserPins[0]) == 0 and pi.read(laserPins[1]) == 0:
 		startRace()
 		#elif pi.read(buttonPin) == 1:
