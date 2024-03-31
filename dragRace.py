@@ -98,8 +98,14 @@ def sense_thread():
       
         stageOff()
         startTime = time.time()
-        leftCarFinished = False
+        leftCarFinished = True
         rightCarFinished = False
+        winnerText = "Winner: " + ("Left" if leftCarFinished else "Right")
+        winner = tk.Label(root, text=winnerText, font=("Arial", 20))
+        winner.pack()
+        
+        print("Left car time: " + str(time.time() - startTime))
+        print("Right car time: " + str(time.time() - startTime))
         while not leftCarFinished or not rightCarFinished: # wait for both cars to finish the race
             """if pi.read(laserPins[2]) == 1 and not leftCarFinished:
                 if not rightCarFinished:
