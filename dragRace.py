@@ -76,14 +76,14 @@ def main():
 		# if 2 is pressed toggle laser2
 		#while input not enter key
 		while True:
-			input = input("press 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently {}\npress enter to start")
-			if input == 1:
+			userInput = input("press 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently {}\npress enter to start")
+			if userInput == 1:
 				leftLaser = not leftLaser
 				print("laser1 is now: " + leftLaser)
-			elif input == 2:
+			elif userInput == 2:
 				rightLaser = not rightLaser
 				print("laser2 is now: " + rightLaser)
-			elif input == "":
+			elif userInput == "":
 				print("starting")
 				break
 		#if pi.read(buttonPin) == 1 and pi.read(laserPins[0]) == 0 and pi.read(laserPins[1]) == 0:
