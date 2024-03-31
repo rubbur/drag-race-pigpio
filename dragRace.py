@@ -23,9 +23,9 @@ rightLaser = 1
 # check if a car moves out of position during the countdown
 def checkFoul():
 	if leftLaser == 1:
-		sense.set_pixel(0, 0, red)
+		sense.set_pixel(5, 0, red)
 	if rightLaser == 1:
-		sense.set_pixel(7, 0, red)
+		sense.set_pixel(5, 7, red)
 		
 	"""
 	if pi.read(laserPins[0]) == 1:
