@@ -85,6 +85,7 @@ def sense_thread():
         sense.set_pixel(1, 1, black)
 
     def startRace():
+        global winner
         stageOn()
      
         flashLeds([[2, 0], [2, 7]], yellow)
@@ -99,7 +100,9 @@ def sense_thread():
         startTime = time.time()
         leftCarFinished = True
         rightCarFinished = False
-        winnerText = "Winner: "
+        if winner:
+            winner.destroy()
+        winnerText = "Recent Winner: "
         if leftCarFinished:
             winnerText += f"left car\nTime: {round(time.time() - startTime, 3):.3f} seconds"
         else:
