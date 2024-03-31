@@ -35,10 +35,10 @@ def checkFoul():
 	"""
  
 def flashLeds(pins, color):
+	print("turning on pins: " + str(pins))
 	for pin in pins:
-		sense.set_pixel(pins[0][0], pins[0][1], color)
+		sense.set_pixel(pin[0][0], pins[0][1], color)
 		sense.set_pixel(pins[1][0], pins[1][1], color)
-	checkFoul()
 	time.sleep(0.5)
 	for pin in pins:
 		sense.set_pixel(pins[0][0], pins[0][1], black)
