@@ -48,17 +48,17 @@ def flashLeds(pins, color):
 	checkFoul()
 
 def startRace():
+	sense.set_pixel(0, 6, yellow)
+	sense.set_pixel(0, 7, yellow)
+	time.sleep(0.5)	
 	sense.set_pixel(0, 0, yellow)
 	sense.set_pixel(0, 1, yellow)
 	time.sleep(0.5)
-	sense.set_pixel(0, 6, yellow)
-	sense.set_pixel(0, 7, yellow)
+	sense.set_pixel(1, 6, yellow)
+	sense.set_pixel(1, 7, yellow)
 	time.sleep(0.5)
 	sense.set_pixel(1, 0, yellow)
 	sense.set_pixel(1, 1, yellow)
-	time.sleep(0.5)
-	sense.set_pixel(1, 6, yellow)
-	sense.set_pixel(1, 7, yellow)
 	time.sleep(0.5)
 	
 	flashLeds([[2, 0], [2, 7]], yellow)
