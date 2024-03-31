@@ -46,8 +46,8 @@ def flashLeds(pins, color):
 		sense.set_pixel(pins[0][0], pins[0][1], black)
 		sense.set_pixel(pins[1][0], pins[1][1], black)
 	checkFoul()
-
-def startRace():
+ 
+def stageOn():
 	sense.set_pixel(0, 6, yellow)
 	sense.set_pixel(0, 7, yellow)
 	time.sleep(0.5)	
@@ -60,7 +60,20 @@ def startRace():
 	sense.set_pixel(1, 0, yellow)
 	sense.set_pixel(1, 1, yellow)
 	time.sleep(0.5)
-	
+
+def stageOff():
+	sense.set_pixel(0, 6, black)
+	sense.set_pixel(0, 7, black)
+	sense.set_pixel(0, 0, black)
+	sense.set_pixel(0, 1, black)
+	sense.set_pixel(1, 6, black)
+	sense.set_pixel(1, 7, black)
+	sense.set_pixel(1, 0, black)
+	sense.set_pixel(1, 1, black)
+
+def startRace():
+	stageOn()
+ 
 	flashLeds([[2, 0], [2, 7]], yellow)
 	flashLeds([[3, 0], [3, 7]], yellow)
 	flashLeds([[4, 0], [4, 7]], yellow)
@@ -68,6 +81,8 @@ def startRace():
 		sense.set_pixel(5, 0, green)
 	if rightLaser == False:
 		sense.set_pixel(5, 7, green)
+  
+	stageOff()
 	startTime = time.time()
 	leftCarFinished = False
 	rightCarFinished = False
@@ -85,6 +100,8 @@ def startRace():
 		"""
 		time.sleep(0.01)
 		break
+	time.sleep(3)
+	sense.clear()
 
 def main():
 	global leftLaser, rightLaser 
