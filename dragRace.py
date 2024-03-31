@@ -80,10 +80,10 @@ def main():
 			userInput = input("press 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently {}\npress enter to start".format(leftLaser, rightLaser))
 			if userInput == '1':
 				leftLaser = not leftLaser
-				print("laser1 is now: " + leftLaser)
+				print("laser1 is now: {}", leftLaser)
 			elif userInput == '2':
 				rightLaser = not rightLaser
-				print("laser2 is now: " + rightLaser)
+				print("laser2 is now: {}", rightLaser)
 			elif userInput == "":
 				print("starting")
 				break
