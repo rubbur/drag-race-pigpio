@@ -37,23 +37,21 @@ def checkFoul():
 def flashLeds(pins, color):
 	print("turning on pins: " + str(pins))
 	for pin in pins:
-		print("turning on pin: {}, {}".format(pins[0][0], pins[0][1]))
-		print("turning on pin: {}, {}".format(pins[1][0], pins[1][1]))
 		sense.set_pixel(pins[0][0], pins[0][1], color)
 		sense.set_pixel(pins[1][0], pins[1][1], color)
 	time.sleep(0.5)
 	for pin in pins:
-		print("turning off pin: {}, {}".format(pins[0][0], pins[0][1]))
-		print("turning off pin: {}, {}".format(pins[1][0], pins[1][1]))
 		sense.set_pixel(pins[0][0], pins[0][1], black)
 		sense.set_pixel(pins[1][0], pins[1][1], black)
 	checkFoul()
 
 def startRace():
-	flashLeds([[0, 0], [7, 0]], yellow)
-	flashLeds([[0, 0], [7, 0]], yellow)
-	flashLeds([[0, 0], [7, 0]], yellow)
-	flashLeds([[0, 0], [7, 0]], yellow)
+	flashLeds([[0, 0], [0, 7]], yellow)
+	flashLeds([[1, 0], [1, 7]], yellow)
+	flashLeds([[2, 0], [2, 7]], yellow)
+	flashLeds([[3, 0], [3, 7]], yellow)
+	sense.set_pixel(4, 0, green)
+	sense.set_pixel(4, 7, green)
 	startTime = time.time()
 	leftCarFinished = False
 	rightCarFinished = False
