@@ -132,8 +132,8 @@ def sense_thread():
         startRace()
         time.sleep(0.1)
 
-gui_thread = threading.Thread(target=gui_thread)
 sense_thread = threading.Thread(target=sense_thread)
-
-gui_thread.start()
 sense_thread.start()
+
+# Run the GUI in the main thread
+gui_thread()
