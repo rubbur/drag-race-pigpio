@@ -46,8 +46,6 @@ def flashLeds(pins, color):
 	checkFoul()
 
 def startRace():
-	checkFoul()
-	time.sleep(1)
 	flashLeds([[0, 0], [7, 0]], yellow)
 	flashLeds([[0, 0], [7, 0]], yellow)
 	flashLeds([[0, 0], [7, 0]], yellow)
