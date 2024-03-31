@@ -1,11 +1,13 @@
 # drag strip (python + pigpio)
 
 from sense_hat import SenseHat
+import pigpio
 import time
 
 ON = 1
 OFF = 0
 
+pi = pigpio.pi()
 sense = SenseHat()
 sense.clear()
 
@@ -17,14 +19,14 @@ black = (0, 0, 0)
 # 1 button, 4 lasers, 2 green leds, 8 yellow leds, 2 red leds
 buttonPin = 2
 #laserPins = [3, 4, 5, 6]
-leftLaser = 1
-rightLaser = 1
+leftLaser = True
+rightLaser = True
 
 # check if a car moves out of position during the countdown
 def checkFoul():
-	if leftLaser == 1:
+	if leftLaser == True:
 		sense.set_pixel(5, 0, red)
-	if rightLaser == 1:
+	if rightLaser == True:
 		sense.set_pixel(5, 7, red)
 		
 	"""
@@ -68,6 +70,7 @@ def startRace():
 			rightCarFinished = True
 		"""
 		time.sleep(0.01)
+		break
 
 def main():
 	global leftLaser, rightLaser 
@@ -77,7 +80,7 @@ def main():
 		# if 2 is pressed toggle laser2
 		#while input not enter key
 		while True:
-			userInput = input("press 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently {}\npress enter to start".format(leftLaser, rightLaser))
+			userInput = input("press 1 to toggle laser1, currently: {}\npress 2 to toggle laser2, currently {}\npress enter to start\n".format(leftLaser, rightLaser))
 			if userInput == '1':
 				leftLaser = not leftLaser
 				print("laser1 is now: {}", leftLaser)
@@ -85,7 +88,6 @@ def main():
 				rightLaser = not rightLaser
 				print("laser2 is now: {}", rightLaser)
 			elif userInput == "":
-				print("starting")
 				break
 		#if pi.read(buttonPin) == 1 and pi.read(laserPins[0]) == 0 and pi.read(laserPins[1]) == 0:
 		startRace()
